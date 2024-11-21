@@ -1,0 +1,5 @@
+package com.example.ExampleCrud.Repo;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import com.example.ExampleCrud.Entity.StudentsEntity1;
+public interface MongoRepo extends MongoRepository<StudentsEntity1, Integer> {
+}

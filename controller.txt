@@ -1,0 +1,49 @@
+package com.example.ExampleCrud.controller;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.example.ExampleCrud.Entity.StudentsEntity1;
+import com.example.ExampleCrud.Repo.MongoRepo;
+@RestController
+@RequestMapping("/students")
+public class ControllerStudent {
+ @Autowired
+ private MongoRepo obj;
+ @PostMapping("/add")
+ public String addStudent(@RequestBody StudentsEntity1 e) {
+ obj.save(e);
+ return "Inserted Successfully";
+ }
+ @GetMapping("/getAll")
+ public List<StudentsEntity1> getAllStudents() {
+ return obj.findAll();
+ }
+ @GetMapping("/get/{id}")
+ public StudentsEntity1 getStudentById(@PathVariable int id) {
+ return obj.findById(id).orElse(null);
+ }
+ @DeleteMapping("/delete/{id}")
+ public String deleteStudent(@PathVariable int id) {
+ if (obj.existsById(id)) {
+ obj.deleteById(id);
+ return "Deleted Successfully";
+ }
+ return "ID Not Found!";
+ }
+ @PutMapping("/update/{id}")
+ public String updateStudent(@PathVariable int id, @RequestBody StudentsEntity1 en) {
+ Optional<StudentsEntity1> optionalStudent = obj.findById(id);
+ if (optionalStudent.isPresent()) {
+ StudentsEntity1 existingData = optionalStudent.get();
+ existingData.setSname(en.getSname());
+ existingData.setSage(en.getSage());
+ existingData.setAddress(en.getAddress());
+ obj.save(existingData);
+ return "Updated Successfully";
+ }
+ return "ID Not Found!";
+ }
+}
+
+

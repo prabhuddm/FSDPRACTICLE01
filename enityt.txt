@@ -1,0 +1,16 @@
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection="CollectionStudents")
+public class StudentsEntity1 {
+ @Id
+ private int srollno;
+ private String sname;
+ private int sage;
+ private String address;
+}
